@@ -1,15 +1,15 @@
 const express = require('express')
 const cors = require('cors')
 
-const { connect } = require('./src/utils/database/db')
+const { connect } = require('./src/utils/database/connect');
 
-const { configCloudinary } = require('./src/utils/cloudinary/config')
+const { configCloudinary } = require('./src/utils/cloudinary/config.cloudinary')
 
 const documentation = require('./src/utils/documentation/api.json')
 
-const MovieRoutes = require('./src/api/movies/movies.routes')
-const ActorRoutes = require('./src/api/actors/actor.routes')
-const UserRoutes = require('./src/api/users/users.routes')
+const MovieRoutes = require('./src/api/routes/movies.routes')
+const ActorRoutes = require('./src/api/routes/actors.routes')
+const UserRoutes = require('./src/api/routes/user.routes')
 
 const PORT = process.env.PORT || 8000
 

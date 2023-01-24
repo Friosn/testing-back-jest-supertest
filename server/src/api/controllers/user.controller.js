@@ -14,7 +14,7 @@ const register = async (req, res, next) => {
     const userDB = await user.save();
     return res.status(201).json(userDB.name)
   } catch (error) {
-    return next(error)
+    return next(setError(404, 'Impossible to register user in DB'))
   }
 }
 
@@ -31,7 +31,7 @@ const login = async (req, res, next) => {
       })
     }
   } catch (error) {
-    return next(error)
+    return next(setError(404, 'Could not find user in DB'))
   }
 }
 

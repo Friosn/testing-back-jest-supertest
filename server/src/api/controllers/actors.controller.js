@@ -8,7 +8,7 @@ const getAll = async (req, res, next) => {
     const actors = await Actor.find()
     res.status(200).json(actors)
   } catch (error) {
-    return next(setError(404, 'Not actors in DB'))
+    return next(setError(404, 'No actors in DB'))
   }
 }
 
@@ -18,7 +18,7 @@ const getOne = async (req, res, next) => {
     const actor = await Actor.findById(id)
     res.status(200).json(actor)
   } catch (error) {
-    return next(setError(404, 'Not find actor in DB'))
+    return next(setError(404, 'Could not find actor in DB'))
   }
 }
 
@@ -32,7 +32,7 @@ const postOne = async (req, res, next) => {
     const actorDB = await actor.save()
     res.status(201).json(actorDB)
   } catch (error) {
-    return next(setError(404, 'Not is posible create a actor in DB'))
+    return next(setError(404, 'Not possible to create actor in DB'))
   }
 }
 
@@ -44,7 +44,7 @@ const patchOne = async (req, res, next) => {
     const updateActor = await Actor.findByIdAndUpdate(id, actor)
     return res.status(200).json(updateActor)
   } catch (error) {
-    return next(error)
+    return next(setError(404, 'Not possible to update actor in DB'))
   }
 }
 
@@ -56,7 +56,7 @@ const deleteOne = async (req, res, next) => {
     if (actor.img) deleteImgCloudinary(actor.img)
     return res.status(200).json(actor)
   } catch (error) {
-    return next(error)
+    return next(setError(404, 'Not possible to delete actor from DB'))
   }
 }
 

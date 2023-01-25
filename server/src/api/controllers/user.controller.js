@@ -10,20 +10,14 @@ const register = async (req, res, next) => {
   try {
     const user = new User(req.body);
     const userExist = await User.findOne({ email: user.email });
-    console.log('cmon dude');
     if (userExist) return next(new Error());
-    console.log('holis');
     const userDB = await user.save();
-    console.log(userDB);
-    console.log('not user?');
     const token = JWT.generateToken(user._id, user.email);
-    console.log('Problems with JWT');
     return res.status(201).json({
       name: userDB.name,
       token: token,
     });
   } catch (error) {
-    console.log('why?');
     return next(setError(404, 'Impossible to register user in DB'));
   }
 };

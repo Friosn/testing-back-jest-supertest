@@ -1,61 +1,70 @@
-const express = require('express')
-const cors = require('cors')
+const express = require('express');
+const cors = require('cors');
 
 const { connect } = require('./src/utils/database/connect');
 
-const { configCloudinary } = require('./src/utils/cloudinary/config.cloudinary')
+const {
+  configCloudinary,
+} = require('./src/utils/cloudinary/config.cloudinary');
 
-const documentation = require('./src/utils/documentation/api.json')
+const documentation = require('./src/utils/documentation/api.json');
 
-const MovieRoutes = require('./src/api/routes/movies.routes')
-const ActorRoutes = require('./src/api/routes/actors.routes')
-const UserRoutes = require('./src/api/routes/user.routes')
+const MovieRoutes = require('./src/api/routes/movies.routes');
+const ActorRoutes = require('./src/api/routes/actors.routes');
+const UserRoutes = require('./src/api/routes/user.routes');
 
-const PORT = process.env.PORT || 8000
+const PORT = process.env.PORT || 8000;
 
-const app = express()
+const app = express();
 
-connect()
+connect();
 
-configCloudinary()
+configCloudinary();
 
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE')
-  res.header('Access-Control-Allow-Credentials', true)
-  res.header('Access-Control-Allow-Headers', 'Content-Type')
-  next()
-})
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
 
-app.use(cors({
-  origin: '*',
-  credentials: true
-}))
+app.use(
+  cors({
+    origin: '*',
+    credentials: true,
+  })
+);
 
-app.use(express.json({ limit: '5mb' }))
+app.use(express.json({ limit: '5mb' }));
 
-app.use(express.urlencoded({
-  limit: '5mb',
-  extended: true
-}))
+app.use(
+  express.urlencoded({
+    limit: '5mb',
+    extended: true,
+  })
+);
 
-app.use('/api/movies', MovieRoutes)
-app.use('/api/actors', ActorRoutes)
-app.use('/api/users', UserRoutes)
+app.use('/api/movies', MovieRoutes);
+app.use('/api/actors', ActorRoutes);
+app.use('/api/users', UserRoutes);
 
-
-app.use('/api', (req, res, next) => res.json(documentation))
+app.use('/api', (req, res, next) => res.json(documentation));
 
 app.use('*', (req, res, next) => {
-  const error = new Error()
-  error.status = 404
-  error.message = 'Route not found'
-  return next(error)
-})
+  const error = new Error();
+  error.status = 404;
+  error.message = 'Route not found';
+  return next(error);
+});
 
 app.use((err, req, res, next) => {
-  return res.status(err.status || 500).json(err.message || 'Unexpected Error')
-})
+  return res.status(err.status || 500).json(err.message || 'Unexpected Error');
+});
 
-app.disable('x-powered-by')
+app.disable('x-powered-by');
 
-const server = app.listen(PORT, () => console.log(`Server Listen on port: ${PORT}`))
+const server = app.listen(PORT, () =>
+  console.log(`Server Listen on port: ${PORT}`)
+);
+
+module.exports = app;

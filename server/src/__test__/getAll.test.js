@@ -1,7 +1,7 @@
 const request = require('supertest');
-const app = require('../../../../index');
-const mockDB = require('../../../utils/documentation/api.json');
-const Actor = require('../../../api/models/actors.model');
+const app = require('../../index');
+const mockDB = require('../utils/documentation/api.json');
+const Actor = require('../api/models/actors.model');
 
 describe('GET /actors', () => {
   it('should get all actors', async () => {
